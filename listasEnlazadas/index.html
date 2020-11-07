@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    #formSection{
+        display: flex;
+    }
+    #formSection>div{
+        width: 30%;
+        margin: 15px;
+    }
+</style>
+<body>
+    <section id="formSection">
+        <div>
+            <h2>Agregar producto</h2>
+            <form id="agregarForm" method='post'>
+                <input type="text" id="codigo" placeholder="Codigo de producto">
+                <input type="text" id="producto" placeholder="Nombre de producto">
+                <input type="text" id="cantidad" placeholder="Cantidad">
+                <input type="text" id="costo" placeholder="Costo">
+                <textarea  id="decripcion" cols="30" rows="10" placeholder="Descripcion"></textarea>
+                <div>
+                    <button type="submit">Agregar</button>
+                </div>
+            </form>
+        </div>
+        <div>
+            <h2>Agregar en posicion especifica</h2>
+            <form id="agregarEspecifico" method='post'>
+                <input type="text" id="posicion1" placeholder="Posicion a insertar">
+                <input type="text" id="codigo1" placeholder="Codigo de producto">
+                <input type="text" id="producto1" placeholder="Nombre de producto">
+                <input type="text" id="cantidad1" placeholder="Cantidad">
+                <input type="text" id="costo1" placeholder="Costo">
+                <textarea  id="decripcion1" cols="30" rows="10" placeholder="Descripcion"></textarea>
+                <div>
+                    <button type="submit">Agregar</button>
+                </div>
+            </form>
+        </div>
+        <div>
+            <h2>Agregar al inicio</h2>
+            <form id="agregarInicio" method='post'>
+                <input type="text" id="codigo2" placeholder="Codigo de producto">
+                <input type="text" id="producto2" placeholder="Nombre de producto">
+                <input type="text" id="cantidad2" placeholder="Cantidad">
+                <input type="text" id="costo2" placeholder="Costo">
+                <textarea  id="decripcion2" cols="30" rows="10" placeholder="Descripcion"></textarea>
+                <div>
+                    <button type="submit">Agregar</button>
+                </div>
+            </form>
+        </div>
+    </section>
+    <section>
+        <button onclick="eliminarInicio()">Eliminar inicio</button>
+        <button onclick="invertir()">Invertir</button>
+    </section>
+    <section>
+        <table>
+            <thead>
+                <tr>
+                    <th>Codigo de producto</th>
+                    <th>Producto</th>
+                    <th>Descripcion</th>
+                    <th>Cantidad</th>
+                    <th>Costo*unidad</th>
+                    <th>Costo total de mercancia</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </section>
+    <section>
+        <h3>Historial</h3>
+    </section>
+    <script src="./index.js" ></script>
+    <!-- <script src="./clases.js" type="module"></script> -->
+    <!-- <script src="clases.js" type="module"></script> -->
+</body>
+</html>
