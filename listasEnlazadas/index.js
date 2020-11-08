@@ -49,7 +49,6 @@ class Inventario{
     }
     agregarInicio(codigo, producto, cantidad, precio, descripcion){
         const Nuevoproducto = new Producto(codigo, producto, cantidad, precio, descripcion);
-        console.log();
         let actual = this.inicio;
         Nuevoproducto.siguiente = actual;
         this.inicio = Nuevoproducto;
@@ -106,20 +105,30 @@ class Inventario{
         if (!inicio || !inicio.siguiente) {
             return inicio;
           }
-          console.log(inicio);
-          let tmp = this.invertir(inicio.siguiente);
+          let aux = this.invertir(inicio.siguiente);
           inicio.siguiente.siguiente = inicio;
           inicio.siguiente = null;
-          return tmp;
+          return aux;
     }
-    
+    buscar(codigo){
+        if(this.tamano == 0) return null;
+        else if(this.inicio.codigo == codigo) return this.inicio;
+        else{
+            let aux = this.inicio;
+            while(aux.codigo != codigo && aux.siguiente != null){
+                aux = aux.siguiente;
+            }
+            if(aux.siguiente == null && aux.codigo != codigo) return null;
+            else return aux;
+        }
+    }
 }
 
 const inventario = new Inventario();
-inventario.agregar(1234, 'pan bimbo', 10, 30, 'pan bimob blanco de 300grs.');
-inventario.agregar(145, 'pan bimbo', 10, 30, 'pan bimob blanco de 300grs.');
-inventario.agregar(123, 'pan bimbo', 10, 30, 'pan bimob blanco de 300grs.');
-inventario.agregar(12, 'pan bimbo', 10, 30, 'pan bimob blanco de 300grs.');
+const div = document.createElement('section');
+div.setAttribute('class','historyElement')
+const history = document.querySelector('#historialContenido');
+
 document.querySelector('#agregarForm').addEventListener('submit', function(e){
     e.preventDefault();
     let codigo = document.querySelector('#codigo').value;
@@ -127,8 +136,13 @@ document.querySelector('#agregarForm').addEventListener('submit', function(e){
     let cantidad = document.querySelector('#cantidad').value;
     let costo = document.querySelector('#costo').value;
     let descripcion = document.querySelector('#decripcion').value;
+    const div = document.createElement('section');
+
     inventario.agregar(codigo, producto, cantidad, costo, descripcion);
     inventario.mostrar();
+
+    div.innerHTML = 'Se agrego un producto';
+    document.querySelector('#historialContenido').appendChild(div);
     document.querySelector('#agregarForm').reset();
 });
 document.querySelector('#agregarEspecifico').addEventListener('submit', function(e){
@@ -139,10 +153,16 @@ document.querySelector('#agregarEspecifico').addEventListener('submit', function
     let cantidad = document.querySelector('#cantidad1').value;
     let costo = document.querySelector('#costo1').value;
     let descripcion = document.querySelector('#decripcion1').value;
+    const div = document.createElement('section');
+
     inventario.agregarEspecifico(codigo, producto, cantidad, costo, descripcion, posicion);
     inventario.mostrar();
+
+    div.innerHTML = 'Se agrego un producto en una posicion especifica'
+    document.querySelector('#historialContenido').appendChild(div);
     document.querySelector('#agregarEspecifico').reset();
 });
+
 document.querySelector('#agregarInicio').addEventListener('submit', function(e){
     e.preventDefault();
     let codigo = document.querySelector('#codigo2').value;
@@ -150,21 +170,65 @@ document.querySelector('#agregarInicio').addEventListener('submit', function(e){
     let cantidad = document.querySelector('#cantidad2').value;
     let costo = document.querySelector('#costo2').value;
     let descripcion = document.querySelector('#decripcion2').value;
+    const div = document.createElement('section');
+    
     inventario.agregarInicio(codigo, producto, cantidad, costo, descripcion,0);
     inventario.mostrar();
+    
+    div.innerHTML ='Se agrego un producto al inicio';
+    document.querySelector('#historialContenido').appendChild(div);
     document.querySelector('#agregarInicio').reset();
 });
 const eliminar = (codigo) => {
     inventario.eliminar(codigo['value']);
     inventario.mostrar();
+
+    const div = document.createElement('section');
+    div.innerHTML ='Se elimino un producto';
+    document.querySelector('#historialContenido').appendChild(div);
 }
 const eliminarInicio = () => {
     inventario.eliminarInicio();
     inventario.mostrar();
+
+    const div = document.createElement('section');
+    div.innerHTML ='Se elimino un producto del inicio de la lista';
+    document.querySelector('#historialContenido').appendChild(div);
 }
 const invertir = () =>{
     inventario.inicio=inventario.invertir(inventario.inicio);
     inventario.mostrar();
+
+    const div = document.createElement('section');
+    div.innerHTML ='Se invirtio la lista';
+    document.querySelector('#historialContenido').appendChild(div);
+}
+const buscar = () => {
+    let codigo = document.querySelector('#buscarInput').value;
+    product = inventario.buscar(codigo);
+    if (product != null) {
+        let result = 
+        `
+        <tr>
+            <td>${product.codigo}</td>
+            <td>${product.producto}</td>
+            <td>${product.descripcion}</td>
+            <td>${product.cantidad}</td>
+            <td>${product.precio}</td>
+            <td>${product.cantidad * product.precio}</td>
+            <td>
+                <button value=${product.codigo} onclick=eliminar(this)>Eliminar</button>
+            </td>
+        </tr>
+        `;
+        document.querySelector('tbody').innerHTML = result;
+
+        const div = document.createElement('section');
+        div.innerHTML ='Se busco un producto';
+        document.querySelector('#historialContenido').appendChild(div);
+    }else{
+        inventario.mostrar();        
+    }
 }
 inventario.mostrar();
 
