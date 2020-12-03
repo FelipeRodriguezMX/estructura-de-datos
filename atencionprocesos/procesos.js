@@ -30,7 +30,7 @@ let Procesos = function(){
     }
     function iniciar(){
         let numTarea = 1;
-        for (let i = 0; i < 100; i++) {
+        for (let i = 0; i < 300; i++) {
             let probabilidad = Math.floor(Math.random() * (100-1)+1) 
             if (inicio == null) {
                 if (probabilidad < 39) {
