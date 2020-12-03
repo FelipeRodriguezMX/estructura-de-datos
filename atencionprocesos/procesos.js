@@ -1,10 +1,10 @@
 const util = require('util');
 
 class Tarea {
-    constructor(tarea, numCiclos, siguiente){
+    constructor(tarea){
         this.tarea = tarea;
-        this.numCiclos = numCiclos
-        this.siguiente = siguiente
+        this.numCiclos = Math.floor(Math.random() * (15 - 3)) + 3
+        this.siguiente = null
     }
 }
 
@@ -15,9 +15,7 @@ let Procesos = function(){
     let atendido = 0;
     let vacio = 0;
 
-    function crear(tarea){
-        let numCiclos = Math.floor(Math.random() * (15 - 3)) + 3;
-        let newTarea = new Tarea(tarea, numCiclos, null);
+    function crear(newTarea){
         if (inicio == null) {
             inicio = newTarea;
             ultimo = newTarea;
@@ -30,31 +28,27 @@ let Procesos = function(){
     }
     function iniciar(){
         let numTarea = 1;
-        for (let i = 0; i < 100; i++) {
+        for (let i = 0; i < 300; i++) {
             let probabilidad = Math.floor(Math.random() * (100-1)+1) 
             if (inicio == null) {
-                if (probabilidad < 39) {
-                    crear(numTarea);
+                vacio ++;
+            } 
+            if (probabilidad < 39) {
+                let newTarea = new Tarea(numTarea);
+                crear(newTarea);
+                numTarea++;
+                size++; 
+            }
+            var aux = inicio;
+            if (aux != null) {
+                if (aux.numCiclos == 0) {
+                    eliminar(aux);
+                    size--;
+                    atendido++; 
                 }
-            } else {
-                if (probabilidad < 39) {
-                    crear(numTarea);
-                    numTarea++;
-                    size++; 
-                }
-                var aux = inicio;
-                if (aux != null) {
-                    if (aux.numCiclos == 0) {
-                        eliminar(aux);
-                        size--;
-                        atendido++;
-                    }
-                    aux.numCiclos--;
-                    aux = aux.siguiente;
-                } else 
-                    vacio ++;
-            }     
-            
+                aux.numCiclos--;
+                aux = aux.siguiente;
+            }    
         }
     }
 
@@ -64,9 +58,9 @@ let Procesos = function(){
             return ultimo
         } else {
             while (actual.siguiente != aux && ultimo != aux) {
-                inicio = inicio.siguiente;
+                actual = inicio.siguiente;
             }
-            return inicio;
+            return actual;
         }
     }
 
