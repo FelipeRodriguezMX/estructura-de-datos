@@ -1,84 +1,57 @@
-const Stack = require('./stack.js');
-class Order {
-    constructor(expression) {
-        this.pila = new Stack(expression.length);
-        this.salida = new Stack(expression.length);
+class Parse {
+    constructor() {
+        this.pila = [];
+        this.salida = [];
     }
-    postOrder(expression) {
-        let inOrder = expression.split('').reverse();
-        console.log(inOrder);
-        let input = inOrder;
-
-        while (input.length > 0) {
-            switch (key) {
-                case value:
-                    
+    arreglarExpression(expression) {
+        const operadores = "+-*/()^";
+        let salida = "";
+        expression = "(" + expression + ")";
+        for (let i in expression)
+            (operadores.includes(expression.charAt(i))) ? salida += " " + expression.charAt(i) + " ": salida += expression.charAt(i);
+        return salida.trim().split(' ');
+    }
+    polacaInversa(expression) {
+        expression = this.arreglarExpression(expression).reverse();
+        let input = expression;
+            while (input.length >0) {
+            switch (this.jerarquia(input[input.length - 1])) {
+                case 1:
+                    this.pila.push(input.pop());
                     break;
-            
+                case 2:
+                    while (this.pila[this.pila.length-1] != '(') this.salida.push(this.pila.pop());
+                    this.pila.pop();
+                    input.pop();
+                    break;
+                case 3:
+                case 4:
+                case 5:
+                    while (this.jerarquia(this.pila[this.pila.length-1]) >= this.jerarquia(input[input.length-1])) this.salida.push(this.pila.pop());
+                    this.pila.push(input.pop());
+                    break;
                 default:
+                    this.salida.push(input.pop());
                     break;
             }
         }
-
-        // expression = expression + ')';
-        // this.pila.push('(');
-        
-        // for (let i = 0; i < expression.length; i++) {
-        //     let character = expression.charAt(i)
-        //     switch (character) {
-        //         case '(':
-        //             this.pila.push(character);
-        //             break;
-        //         case ')':
-        //             while (this.pila.peek() != '(') {
-        //                 this.salida.push(this.pila.pop())
-        //             }
-        //             this.pila.pop();
-        //             break
-        //         case '*':
-        //         case '+':
-        //         case '-':
-        //         case '/':
-        //         case '^':
-        //             while (this.jerarquiaOperadores(character) <= this.jerarquiaOperadores(this.pila.peek())) {
-        //                 this.salida.push(this.pila.pop());
-        //             }
-        //             this.pila.push(character);
-        //             break;
-        //         default:
-        //             this.salida.push(character);
-        //             break;
-        //     }
-        // }
-        // return this.salida.stackData()
+       return this.salida.join(" ").replace(/\s{2,}/g, ' ')
     }
-
     jerarquia(operador) {
-        let jerarquia = 0;
-        if (this.operadores[operador]) {
-            jerarquia = this.operadores[operador];
+        const operadores = {
+            '^': 5,
+            '*': 4,
+            '/': 4,
+            '+': 3,
+            '-': 3,
+            ')': 2,
+            '(': 1,
         }
-        return jerarquia;
-        // if (operador == ')') {
-        //     jerarquia = 5;
-        // }
-        // if (operador == '^') {
-        //     jerarquia = 4;
-        // }
-
-        // if (operador == '*' || operador == '/') {
-        //     jerarquia = 3;
-        // }
-
-        // if (operador == '+' || operador == '-') {
-        //     jerarquia = 2;
-        // }
-
-        // if (operador == '(') {
-        //     jerarquia = 1;
-        // }
-        // return jerarquia;
+        if (operadores[operador]) {
+            return operadores[operador];
+        }
+        return 10;
     }
 }
 
-module.exports = Order;
+module.exports = Parse;

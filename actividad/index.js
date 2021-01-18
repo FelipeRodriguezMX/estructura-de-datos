@@ -8,13 +8,14 @@ class Ordenamiento{
     llenar(){
         this.vector1 = this.numerosRandom(20,30);
         this.vector2 = this.numerosRandom(20,30);
-        this.vector1.sort(function(a,b) {
-            return a-b;
-        });
-        this.vector2.sort(function(a,b) {
-            return a-b;
-        });
+        // this.vector1.sort(function(a,b) {
+        //     return a-b;
+        // });
+        // this.vector2.sort(function(a,b) {
+        //     return a-b;
+        // });
         let concatArray = this.vector1.concat(this.vector2);
+        console.log(concatArray);
         this.bubbleSort(concatArray);
     }
 
@@ -41,9 +42,9 @@ class Ordenamiento{
     }
 
     print(){
-        console.log('array1', this.vector1);
-        console.log('array2', this.vector2);
-        console.log('concat array', this.newArray);
+        // console.log('array1', this.vector1);
+        // console.log('array2', this.vector2);
+         console.log('concat array', this.newArray);
     }
 }
 

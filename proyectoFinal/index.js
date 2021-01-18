@@ -1,4 +1,7 @@
 let Arbol = require('./arbol');
 let arbol = new Arbol();
 
-arbol.getExpression('5+7+9*((4^8)/8)');
+arbol.getExpression('(X*Y)/((A+B)*C)');
+arbol.print()
+console.log('///////////////');
+arbol.order();

@@ -13,14 +13,27 @@ class Arbol {
 
     agregar(nuevo) {
         const newNumber = new Number(nuevo)
-        (this.raiz == null) ? this.raiz = newNumber: this.checate(newNumber, this.raiz);
+        if (this.raiz == null) {
+            this.raiz = newNumber 
+        } 
+        else 
+            this.checate(newNumber, this.raiz);
     }
 
     checate(nuevo, r){
-        if (nuevo.id < r) 
-            (r.izquierdo == null) ? r.izquierdo = nuevo : this.checate(nuevo, r.izquierdo);
-        else if (nuevo.id > r)
-            (r.derecho == null) ? r.derecho = nuevo : this.checate(nuevo, r.derecho);
+        if (nuevo.id < r) {
+            if (r.izquierdo == null)
+                r.izquierdo = nuevo 
+            else
+                this.checate(nuevo, r.izquierdo);
+        }
+        else if (nuevo.id > r){
+            if(r.derecho == null){
+                r.derecho = nuevo 
+            }else{
+                this.checate(nuevo, r.derecho);
+            }
+        }
         else 
             throw Error;
     }
@@ -40,25 +53,25 @@ class Arbol {
             this.inOrder(r.izquierdo)
         console.log(r.id) 
         if(r.hder!=null)       
-            this.inOrderRec(r.derecho);
+            this.inOrder(r.derecho);
     }
     postOrder(r){
         console.log(r.id) 
         if (r.hizq!=null)            
             this.inOrder(r.izquierdo)
         if(r.hder!=null)       
-            this.inOrderRec(r.derecho);
+            this.inOrder(r.derecho);
     }
     preOrder(r){
         if (r.hizq!=null)            
             this.inOrder(r.izquierdo)
         if(r.hder!=null)       
-            this.inOrderRec(r.derecho);
+            this.inOrder(r.derecho);
         console.log(r.id) 
     }
 }
 
-import {Arbol} from './arbol';
+// import {Arbol} from './arbol';
 
 const arbol = new Arbol();
 
