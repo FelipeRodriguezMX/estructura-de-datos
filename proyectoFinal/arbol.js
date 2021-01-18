@@ -88,7 +88,7 @@ class Arbol {
     }
 
     print(){
-        // console.log(this.raiz);
+        console.log(this.raiz);
     }
 }
 
